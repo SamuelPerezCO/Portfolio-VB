@@ -1,0 +1,117 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block title %}{{ project.title }} — {{ profile.full_name|default:"Portfolio" }}{% endblock %}
+{% block meta_description %}{{ project.description }}{% endblock %}
+
+{% block content %}
+
+<section class="page-hero section-pad">
+  <div class="container">
+    <a href="{% url 'projects' %}" class="back-link mb-3 d-inline-flex align-items-center gap-2">
+      <i class="bi bi-arrow-left"></i> Back to projects
+    </a>
+    <div class="project-tags mb-3">
+      {% for tech in project.technologies.all %}
+      <span class="tech-tag">{{ tech.name }}</span>
+      {% endfor %}
+    </div>
+    <h1 class="page-title">{{ project.title }}</h1>
+    <div class="project-hero-links d-flex gap-3 mt-4">
+      {% if project.live_url %}
+      <a href="{{ project.live_url }}" target="_blank" class="btn btn-primary-solid">
+        <i class="bi bi-box-arrow-up-right me-2"></i>Live Demo
+      </a>
+      {% endif %}
+      {% if project.github_url %}
+      <a href="{{ project.github_url }}" target="_blank" class="btn btn-ghost">
+        <i class="bi bi-github me-2"></i>View Code
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="section-pad pt-0">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-8">
+        {% if project.image %}
+        <div class="project-detail-img mb-5">
+          <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-100 rounded">
+        </div>
+        {% endif %}
+        <div class="project-content">
+          {% if project.long_description %}
+            {{ project.long_description|linebreaks }}
+          {% else %}
+            {{ project.description|linebreaks }}
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="project-sidebar">
+          <div class="sidebar-card">
+            <h4 class="sidebar-title">Technologies</h4>
+            <div class="tech-list">
+              {% for tech in project.technologies.all %}
+              <div class="tech-item">
+                {% if tech.icon %}<span class="tech-icon">{{ tech.icon }}</span>{% endif %}
+                <span>{{ tech.name }}</span>
+                <span class="tech-category">{{ tech.get_category_display }}</span>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          {% if project.live_url or project.github_url %}
+          <div class="sidebar-card mt-4">
+            <h4 class="sidebar-title">Links</h4>
+            {% if project.live_url %}
+            <a href="{{ project.live_url }}" target="_blank" class="sidebar-link">
+              <i class="bi bi-globe"></i> Live Site
+            </a>
+            {% endif %}
+            {% if project.github_url %}
+            <a href="{{ project.github_url }}" target="_blank" class="sidebar-link">
+              <i class="bi bi-github"></i> GitHub Repo
+            </a>
+            {% endif %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Projects -->
+    {% if related_projects %}
+    <div class="related-section mt-5 pt-5">
+      <h3 class="section-title">Related Projects</h3>
+      <div class="project-grid">
+        {% for rp in related_projects %}
+        <article class="project-card">
+          <div class="project-card-img">
+            {% if rp.image %}
+            <img src="{{ rp.image.url }}" alt="{{ rp.title }}">
+            {% else %}
+            <div class="project-img-placeholder"><i class="bi bi-window"></i></div>
+            {% endif %}
+          </div>
+          <div class="project-card-body">
+            <div class="project-tags">
+              {% for tech in rp.technologies.all|slice:":3" %}
+              <span class="tech-tag">{{ tech.name }}</span>
+              {% endfor %}
+            </div>
+            <h3 class="project-title"><a href="{% url 'project_detail' rp.slug %}">{{ rp.title }}</a></h3>
+            <p class="project-desc">{{ rp.description|truncatechars:100 }}</p>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

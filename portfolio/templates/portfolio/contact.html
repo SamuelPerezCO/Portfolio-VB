@@ -1,0 +1,113 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block title %}Contact — {{ profile.full_name|default:"Portfolio" }}{% endblock %}
+
+{% block content %}
+
+<section class="page-hero section-pad">
+  <div class="container">
+    <div class="section-label">Say hello</div>
+    <h1 class="page-title">Get In Touch</h1>
+  </div>
+</section>
+
+<section class="section-pad pt-0">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-5">
+        <div class="contact-info">
+          <p class="contact-intro">
+            Have a project in mind, a question, or just want to say hi?
+            I'd love to hear from you. I'll get back to you as soon as possible.
+          </p>
+          <ul class="contact-details mt-4">
+            {% if profile.email %}
+            <li>
+              <div class="contact-icon"><i class="bi bi-envelope"></i></div>
+              <div>
+                <span class="contact-label">Email</span>
+                <a href="mailto:{{ profile.email }}" class="contact-value">{{ profile.email }}</a>
+              </div>
+            </li>
+            {% endif %}
+            {% if profile.location %}
+            <li>
+              <div class="contact-icon"><i class="bi bi-geo-alt"></i></div>
+              <div>
+                <span class="contact-label">Location</span>
+                <span class="contact-value">{{ profile.location }}</span>
+              </div>
+            </li>
+            {% endif %}
+            <li>
+              <div class="contact-icon"><i class="bi bi-clock"></i></div>
+              <div>
+                <span class="contact-label">Response time</span>
+                <span class="contact-value">Within 24–48 hours</span>
+              </div>
+            </li>
+          </ul>
+          <div class="contact-socials mt-4">
+            {% if profile.github %}<a href="{{ profile.github }}" target="_blank" class="social-link"><i class="bi bi-github"></i></a>{% endif %}
+            {% if profile.linkedin %}<a href="{{ profile.linkedin }}" target="_blank" class="social-link"><i class="bi bi-linkedin"></i></a>{% endif %}
+            {% if profile.twitter %}<a href="{{ profile.twitter }}" target="_blank" class="social-link"><i class="bi bi-twitter-x"></i></a>{% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <div class="contact-form-wrap">
+          <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-label" for="{{ form.name.id_for_label }}">Name</label>
+                  {{ form.name }}
+                  {% if form.name.errors %}
+                  <div class="form-error">{{ form.name.errors.0 }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+                  {{ form.email }}
+                  {% if form.email.errors %}
+                  <div class="form-error">{{ form.email.errors.0 }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="form-label" for="{{ form.subject.id_for_label }}">Subject</label>
+                  {{ form.subject }}
+                  {% if form.subject.errors %}
+                  <div class="form-error">{{ form.subject.errors.0 }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="form-label" for="{{ form.message.id_for_label }}">Message</label>
+                  {{ form.message }}
+                  {% if form.message.errors %}
+                  <div class="form-error">{{ form.message.errors.0 }}</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary-solid w-100">
+                  Send Message <i class="bi bi-send ms-2"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

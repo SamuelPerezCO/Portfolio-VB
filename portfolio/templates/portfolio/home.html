@@ -1,0 +1,148 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block title %}{{ profile.full_name|default:"Developer" }} — Portfolio{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center min-vh-90">
+      <div class="col-lg-7 hero-text">
+        {% if profile.available_for_work %}
+        <div class="availability-badge mb-4">
+          <span class="badge-dot"></span>
+          Available for work
+        </div>
+        {% endif %}
+        <h1 class="hero-headline">
+          Hi, I'm<br>
+          <em>{{ profile.full_name|default:"Your Name" }}</em>
+        </h1>
+        <p class="hero-role">{{ profile.role|default:"Software Developer" }}</p>
+        <p class="hero-bio">{{ profile.bio|default:"Welcome to my portfolio." |truncatechars:200 }}</p>
+        <div class="hero-cta d-flex gap-3 flex-wrap">
+          <a href="{% url 'projects' %}" class="btn btn-primary-solid">View My Work</a>
+          <a href="{% url 'contact' %}" class="btn btn-ghost">Get In Touch</a>
+        </div>
+        <div class="hero-social mt-4">
+          {% if profile.github %}<a href="{{ profile.github }}" target="_blank" class="social-link"><i class="bi bi-github"></i></a>{% endif %}
+          {% if profile.linkedin %}<a href="{{ profile.linkedin }}" target="_blank" class="social-link"><i class="bi bi-linkedin"></i></a>{% endif %}
+          {% if profile.twitter %}<a href="{{ profile.twitter }}" target="_blank" class="social-link"><i class="bi bi-twitter-x"></i></a>{% endif %}
+        </div>
+      </div>
+      <div class="col-lg-5 hero-visual d-none d-lg-flex justify-content-center">
+        <div class="hero-avatar-wrap">
+          {% if profile.avatar %}
+          <img src="{{ profile.avatar.url }}" alt="{{ profile.full_name }}" class="hero-avatar">
+          {% else %}
+          <div class="hero-avatar-placeholder">
+            <i class="bi bi-person-fill"></i>
+          </div>
+          {% endif %}
+          <div class="hero-card floating-card card-1">
+            <i class="bi bi-code-slash"></i>
+            <span>Clean Code</span>
+          </div>
+          <div class="hero-card floating-card card-2">
+            <i class="bi bi-lightning-fill"></i>
+            <span>Fast &amp; Efficient</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Skills Section -->
+{% if skills_by_category %}
+<section class="skills-section section-pad">
+  <div class="container">
+    <div class="section-label">What I work with</div>
+    <h2 class="section-title">Tech Stack</h2>
+    <div class="skills-grid">
+      {% for category, skill_list in skills_by_category.items %}
+      <div class="skill-category">
+        <h4 class="skill-cat-title">{{ category }}</h4>
+        <div class="skill-list">
+          {% for skill in skill_list %}
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name">{{ skill.name }}</span>
+              <span class="skill-pct">{{ skill.proficiency }}%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-bar-fill" style="--target-width: {{ skill.proficiency }}%"></div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Featured Projects -->
+{% if featured_projects %}
+<section class="projects-section section-pad">
+  <div class="container">
+    <div class="section-header d-flex justify-content-between align-items-end mb-5">
+      <div>
+        <div class="section-label">Selected work</div>
+        <h2 class="section-title mb-0">Featured Projects</h2>
+      </div>
+      <a href="{% url 'projects' %}" class="view-all-link">All projects <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="project-grid">
+      {% for project in featured_projects %}
+      <article class="project-card">
+        <div class="project-card-img">
+          {% if project.image %}
+          <img src="{{ project.image.url }}" alt="{{ project.title }}">
+          {% else %}
+          <div class="project-img-placeholder">
+            <i class="bi bi-window"></i>
+          </div>
+          {% endif %}
+          <div class="project-card-overlay">
+            <div class="project-links">
+              {% if project.live_url %}<a href="{{ project.live_url }}" target="_blank" class="project-link-btn"><i class="bi bi-box-arrow-up-right"></i></a>{% endif %}
+              {% if project.github_url %}<a href="{{ project.github_url }}" target="_blank" class="project-link-btn"><i class="bi bi-github"></i></a>{% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-tags">
+            {% for tech in project.technologies.all|slice:":3" %}
+            <span class="tech-tag">{{ tech.name }}</span>
+            {% endfor %}
+          </div>
+          <h3 class="project-title"><a href="{% url 'project_detail' project.slug %}">{{ project.title }}</a></h3>
+          <p class="project-desc">{{ project.description|truncatechars:120 }}</p>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="cta-section section-pad">
+  <div class="container">
+    <div class="cta-inner">
+      <h2 class="cta-title">Have a project in mind?</h2>
+      <p class="cta-sub">Let's build something great together.</p>
+      <a href="{% url 'contact' %}" class="btn btn-primary-solid btn-lg">Start a Conversation</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

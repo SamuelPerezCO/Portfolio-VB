@@ -1,0 +1,74 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block title %}Projects — {{ profile.full_name|default:"Portfolio" }}{% endblock %}
+
+{% block content %}
+
+<section class="page-hero section-pad">
+  <div class="container">
+    <div class="section-label">My work</div>
+    <h1 class="page-title">Projects</h1>
+  </div>
+</section>
+
+<section class="section-pad pt-0">
+  <div class="container">
+
+    <!-- Filter Bar -->
+    {% if skills %}
+    <div class="filter-bar mb-5">
+      <a href="{% url 'projects' %}" class="filter-btn {% if not active_filter %}active{% endif %}">All</a>
+      {% for skill in skills %}
+      <a href="?tech={{ skill.slug }}" class="filter-btn {% if active_filter == skill.slug %}active{% endif %}">{{ skill.name }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Projects Grid -->
+    {% if projects %}
+    <div class="project-grid">
+      {% for project in projects %}
+      <article class="project-card">
+        <div class="project-card-img">
+          {% if project.image %}
+          <img src="{{ project.image.url }}" alt="{{ project.title }}">
+          {% else %}
+          <div class="project-img-placeholder"><i class="bi bi-window"></i></div>
+          {% endif %}
+          <div class="project-card-overlay">
+            <div class="project-links">
+              {% if project.live_url %}<a href="{{ project.live_url }}" target="_blank" class="project-link-btn"><i class="bi bi-box-arrow-up-right"></i></a>{% endif %}
+              {% if project.github_url %}<a href="{{ project.github_url }}" target="_blank" class="project-link-btn"><i class="bi bi-github"></i></a>{% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="project-card-body">
+          <div class="project-tags">
+            {% for tech in project.technologies.all|slice:":4" %}
+            <span class="tech-tag">{{ tech.name }}</span>
+            {% endfor %}
+          </div>
+          <h3 class="project-title">
+            <a href="{% url 'project_detail' project.slug %}">{{ project.title }}</a>
+          </h3>
+          <p class="project-desc">{{ project.description|truncatechars:130 }}</p>
+          <a href="{% url 'project_detail' project.slug %}" class="project-read-more">
+            View details <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <i class="bi bi-folder2-open"></i>
+      <p>No projects found.</p>
+      {% if active_filter %}<a href="{% url 'projects' %}" class="btn btn-ghost">Clear filter</a>{% endif %}
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}

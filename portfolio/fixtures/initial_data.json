@@ -1,0 +1,157 @@
+[
+  {
+    "model": "portfolio.profile",
+    "pk": 1,
+    "fields": {
+      "full_name": "Alex Rivera",
+      "role": "Full Stack Developer",
+      "bio": "I'm a passionate full stack developer with 4+ years of experience building modern web applications. I love working across the entire stack — from crafting clean, accessible frontends to designing scalable backend APIs.\n\nI specialize in Python/Django, React, and cloud infrastructure. I believe great software is not just about working code, but about code that is readable, maintainable, and a joy to work with.\n\nWhen I'm not coding, you'll find me hiking, reading about distributed systems, or experimenting with new tech stacks.",
+      "avatar": "",
+      "resume": "",
+      "github": "https://github.com",
+      "linkedin": "https://linkedin.com",
+      "twitter": "https://twitter.com",
+      "email": "alex@example.com",
+      "location": "Medellín, Colombia",
+      "available_for_work": true
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 1,
+    "fields": {"name": "Python", "category": "backend", "icon": "🐍", "proficiency": 92, "order": 1}
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 2,
+    "fields": {"name": "Django", "category": "backend", "icon": "🎯", "proficiency": 90, "order": 2}
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 3,
+    "fields": {"name": "Django REST Framework", "category": "backend", "icon": "🔌", "proficiency": 85, "order": 3}
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 4,
+    "fields": {"name": "React", "category": "frontend", "icon": "⚛️", "proficiency": 80, "order": 4}
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 5,
+    "fields": {"name": "JavaScript", "category": "frontend", "icon": "⚡", "proficiency": 85, "order": 5}
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 6,
+    "fields": {"name": "HTML / CSS", "category": "frontend", "icon": "🎨", "proficiency": 95, "order": 6}
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 7,
+    "fields": {"name": "PostgreSQL", "category": "database", "icon": "🐘", "proficiency": 82, "order": 7}
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 8,
+    "fields": {"name": "Docker", "category": "devops", "icon": "🐳", "proficiency": 75, "order": 8}
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 9,
+    "fields": {"name": "Git", "category": "tools", "icon": "🔀", "proficiency": 90, "order": 9}
+  },
+  {
+    "model": "portfolio.project",
+    "pk": 1,
+    "fields": {
+      "title": "E-Commerce Platform",
+      "slug": "e-commerce-platform",
+      "description": "A full-featured e-commerce solution with product management, cart, checkout, and Stripe payment integration.",
+      "long_description": "Built a production-ready e-commerce platform serving 500+ products. Features include user authentication, product catalog with search and filters, shopping cart with persistent sessions, Stripe checkout integration, and an order management dashboard for admins.\n\nThe backend is powered by Django + DRF providing a RESTful API, with a React frontend consuming it. Deployed on AWS using Docker containers managed by ECS.",
+      "image": "",
+      "technologies": [1, 2, 3, 4, 7],
+      "github_url": "https://github.com",
+      "live_url": "https://example.com",
+      "is_featured": true,
+      "order": 1,
+      "created_at": "2024-06-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "portfolio.project",
+    "pk": 2,
+    "fields": {
+      "title": "Task Management API",
+      "slug": "task-management-api",
+      "description": "A RESTful API for team task management with JWT auth, real-time notifications via WebSockets, and role-based access control.",
+      "long_description": "Designed and implemented a robust task management API used by an internal team of 30+ people. Key features include JWT authentication, WebSocket-based real-time updates, granular RBAC, file attachments, and activity logs.\n\nBuilt using Django Channels for WebSocket support and Celery for async task processing. Fully documented with OpenAPI/Swagger.",
+      "image": "",
+      "technologies": [1, 2, 3, 7, 8],
+      "github_url": "https://github.com",
+      "live_url": "",
+      "is_featured": true,
+      "order": 2,
+      "created_at": "2024-03-15T00:00:00Z"
+    }
+  },
+  {
+    "model": "portfolio.project",
+    "pk": 3,
+    "fields": {
+      "title": "Personal Finance Dashboard",
+      "slug": "personal-finance-dashboard",
+      "description": "A data visualization dashboard to track expenses, income, and savings goals with insightful charts and reports.",
+      "long_description": "Built a personal finance tracker that imports bank transactions via CSV, categorizes them automatically using ML, and presents clear visualizations using Chart.js. Users can set monthly budgets and receive alerts when approaching limits.\n\nThe project uses Django on the backend and a vanilla JS frontend with Bootstrap for a lightweight, fast experience.",
+      "image": "",
+      "technologies": [1, 2, 5, 6, 7],
+      "github_url": "https://github.com",
+      "live_url": "https://example.com",
+      "is_featured": true,
+      "order": 3,
+      "created_at": "2023-11-10T00:00:00Z"
+    }
+  },
+  {
+    "model": "portfolio.experience",
+    "pk": 1,
+    "fields": {
+      "type": "work",
+      "company": "TechCorp Solutions",
+      "role": "Senior Full Stack Developer",
+      "description": "Led the development of a microservices-based platform serving 10k+ daily active users. Mentored 3 junior developers, introduced CI/CD pipelines, and reduced deployment time by 60%.",
+      "start_date": "2022-03-01",
+      "end_date": null,
+      "location": "Remote",
+      "order": 1
+    }
+  },
+  {
+    "model": "portfolio.experience",
+    "pk": 2,
+    "fields": {
+      "type": "work",
+      "company": "StartupXYZ",
+      "role": "Full Stack Developer",
+      "description": "Developed and maintained a Django + React SaaS product from MVP to production. Implemented subscription billing, onboarding flows, and analytics dashboards.",
+      "start_date": "2020-06-01",
+      "end_date": "2022-02-28",
+      "location": "Medellín, Colombia",
+      "order": 2
+    }
+  },
+  {
+    "model": "portfolio.experience",
+    "pk": 3,
+    "fields": {
+      "type": "education",
+      "company": "Universidad de Antioquia",
+      "role": "B.Sc. Systems Engineering",
+      "description": "Graduated with honors. Specialized in software architecture, distributed systems, and database design. Final project: real-time collaborative code editor.",
+      "start_date": "2016-01-01",
+      "end_date": "2020-12-01",
+      "location": "Medellín, Colombia",
+      "order": 1
+    }
+  }
+]

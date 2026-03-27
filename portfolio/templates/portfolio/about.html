@@ -1,0 +1,124 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block title %}About — {{ profile.full_name|default:"Portfolio" }}{% endblock %}
+
+{% block content %}
+
+<section class="page-hero section-pad">
+  <div class="container">
+    <div class="section-label">Get to know me</div>
+    <h1 class="page-title">About Me</h1>
+  </div>
+</section>
+
+<section class="about-section section-pad pt-0">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-4">
+        <div class="about-avatar-wrap">
+          {% if profile.avatar %}
+          <img src="{{ profile.avatar.url }}" alt="{{ profile.full_name }}" class="about-avatar">
+          {% else %}
+          <div class="about-avatar-placeholder"><i class="bi bi-person-fill"></i></div>
+          {% endif %}
+          <div class="about-info-card mt-4">
+            <ul class="about-meta-list">
+              {% if profile.location %}
+              <li><i class="bi bi-geo-alt"></i> {{ profile.location }}</li>
+              {% endif %}
+              {% if profile.email %}
+              <li><i class="bi bi-envelope"></i> {{ profile.email }}</li>
+              {% endif %}
+              <li>
+                <i class="bi bi-circle-fill {% if profile.available_for_work %}text-success{% else %}text-danger{% endif %}"></i>
+                {% if profile.available_for_work %}Available for work{% else %}Not available{% endif %}
+              </li>
+            </ul>
+            <div class="about-socials mt-3 d-flex gap-3">
+              {% if profile.github %}<a href="{{ profile.github }}" target="_blank" class="social-link"><i class="bi bi-github"></i></a>{% endif %}
+              {% if profile.linkedin %}<a href="{{ profile.linkedin }}" target="_blank" class="social-link"><i class="bi bi-linkedin"></i></a>{% endif %}
+              {% if profile.twitter %}<a href="{{ profile.twitter }}" target="_blank" class="social-link"><i class="bi bi-twitter-x"></i></a>{% endif %}
+            </div>
+            {% if profile.resume %}
+            <a href="{{ profile.resume.url }}" class="btn btn-outline-accent w-100 mt-3" download>
+              <i class="bi bi-download me-2"></i>Download CV
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <h2 class="about-name">{{ profile.full_name|default:"Your Name" }}</h2>
+        <p class="about-role">{{ profile.role|default:"Software Developer" }}</p>
+        <div class="about-bio">
+          {{ profile.bio|default:"Tell your story here."|linebreaks }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Work Experience -->
+{% if work_experiences %}
+<section class="timeline-section section-pad">
+  <div class="container">
+    <div class="section-label">Career</div>
+    <h2 class="section-title">Work Experience</h2>
+    <div class="timeline">
+      {% for exp in work_experiences %}
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="timeline-header">
+            <h3 class="timeline-role">{{ exp.role }}</h3>
+            <span class="timeline-duration">{{ exp.duration }}</span>
+          </div>
+          <p class="timeline-company">
+            {{ exp.company }}
+            {% if exp.location %} &mdash; {{ exp.location }}{% endif %}
+          </p>
+          <p class="timeline-dates">
+            {{ exp.start_date|date:"M Y" }} &mdash;
+            {% if exp.is_current %}<span class="badge-current">Present</span>{% else %}{{ exp.end_date|date:"M Y" }}{% endif %}
+          </p>
+          <p class="timeline-desc">{{ exp.description }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Education -->
+{% if education %}
+<section class="timeline-section section-pad pt-0">
+  <div class="container">
+    <div class="section-label">Academic</div>
+    <h2 class="section-title">Education</h2>
+    <div class="timeline">
+      {% for edu in education %}
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="timeline-header">
+            <h3 class="timeline-role">{{ edu.role }}</h3>
+            <span class="timeline-duration">{{ edu.duration }}</span>
+          </div>
+          <p class="timeline-company">{{ edu.company }}</p>
+          <p class="timeline-dates">
+            {{ edu.start_date|date:"M Y" }} &mdash;
+            {% if edu.is_current %}<span class="badge-current">Present</span>{% else %}{{ edu.end_date|date:"M Y" }}{% endif %}
+          </p>
+          <p class="timeline-desc">{{ edu.description }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}
